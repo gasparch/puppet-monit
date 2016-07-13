@@ -17,6 +17,8 @@ define monit::check::program(
   $priority   = '20',
   $bundle     = $name,
   $order      = 0,
+  $program_start   = undef,
+  $program_stop    = undef,
   $uid             = undef,
   $gid             = undef,
   $timeout         = undef,

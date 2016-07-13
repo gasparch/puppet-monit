@@ -17,10 +17,20 @@ define monit::check::program(
   $priority   = '20',
   $bundle     = $name,
   $order      = 0,
+  $uid             = undef,
+  $gid             = undef,
+  $timeout         = undef,
+  $timeout_start   = undef,
+  $timeout_stop    = undef,
 ) {
 
   $path_parts = split($path, ' ')
   validate_absolute_path($path_parts[0])
+
+  if $timeout {
+    $real_timeout_start   = pick($timeout_start, $timeout)
+    $real_timeout_stop    = pick($timeout_stop, $timeout)
+  }
 
   monit::check::instance { "${name}_instance":
     ensure   => $ensure,

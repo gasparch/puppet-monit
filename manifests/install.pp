@@ -39,7 +39,8 @@ class monit::install {
     } ->
     staging::deploy { 'monit-dist.tar.gz':
       source => $url,
-      target => '/opt/monit'
+      target => '/opt/monit',
+      creates => "/opt/monit/monit-$version/bin/monit"
     } ->
     file {'/usr/bin/monit':
       ensure => link,

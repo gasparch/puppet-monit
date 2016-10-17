@@ -23,11 +23,11 @@ class monit::install {
       default:  { $arch = 'x86' }
     }
 
-    if $monit::mmonit_url {
-      $url = $monit::mmonit_url
-    } else {
-      $version = $monit::package
-      $url = "https://mmonit.com/monit/dist/binary/$version/monit-$version-$family-$arch.tar.gz"
+    $url = case $monit::package {
+      /^http/: { $monit::package }
+      default: { $version = $monit::package
+                 "https://mmonit.com/monit/dist/binary/$version/monit-$version-$family-$arch.tar.gz"
+                }
     }
 
     package { 'monit':

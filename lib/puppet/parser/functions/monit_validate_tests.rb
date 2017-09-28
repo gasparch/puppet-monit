@@ -82,7 +82,11 @@ module Puppet::Parser::Functions
             unless test.key? 'exec'
               raise Puppet::ParseError, exception_prefix + "missing command for exec action"
             else
-              test['action'] = "EXEC \"#{test['exec']}\""
+              if test.key? 'repeat'
+                        test['action'] = "EXEC \"#{test['exec']}\" REPEAT EVERY #{test['repeat']} CYCLES"
+              else
+                        test['action'] = "EXEC \"#{test['exec']}\""
+              end
             end
           end
         end
